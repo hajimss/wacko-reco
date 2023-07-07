@@ -4,8 +4,7 @@ import { Box, Typography } from '@mui/material';
 
 const Login: React.FC = () => {
     var client_id:string=process.env.REACT_APP_CLIENT_ID!
-    var client_secret:string=process.env.REACT_APP_CLIENT_SECRET!
-    var callback_url:string=process.env.REACT_APP_CALLBACK_URL!
+    var callback_url:string= window.location.href
 
     // building the auth url
     let auth_url = new URL('https://accounts.spotify.com/authorize')
