@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Login from './auth/Login';
 import Logout from './auth/Logout';
-import { Paper, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ContentIndex from './content/ContentIndex';
 import WackoRecoTitle from './template/WackoRecoTitle';
@@ -23,7 +23,7 @@ const App: React.FC = () => {
       setToken(access_token)
     }
     nav('/')
-  }, [token])
+  }, [nav, token])
 
   const onLogout = () => {
     localStorage.removeItem('access_token');
@@ -32,12 +32,12 @@ const App: React.FC = () => {
   }
 
   return (
-    <Paper sx={{
+    <Box sx={{
                 display:'flex', 
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: 7,
-                bgcolor: 'primary.light'
+                bgcolor: 'primary.light',
+                width: '100%'
               }}
                 className="App">
       <WackoRecoTitle/>
@@ -48,7 +48,7 @@ const App: React.FC = () => {
       {token.length===0 ? null
         : 
         <ContentIndex/>}
-    </Paper>
+    </Box>
   );
 }
 

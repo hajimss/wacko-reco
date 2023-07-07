@@ -1,4 +1,4 @@
-import { Button, Box, Checkbox, FormControl, FormControlLabel, Typography, Divider, Alert } from '@mui/material'
+import { Button, Box, Checkbox, FormControl, FormControlLabel, Typography, Alert } from '@mui/material'
 import React, { FC, FormEventHandler, useState } from 'react'
 import MetricSlider from './MetricSlider';
 import { TrackObj, ArtistObj, MetricObj, HandleSubmitInterface } from './interfaces/form.interfaces';
@@ -91,6 +91,7 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
     }
 
   return (
+
     <form onSubmit={onHandleSubmit}>
         <Box sx={{width:'100%', display:'flex', flexDirection:'column', alignItems:'center'}}>
             {warning ? <Alert variant='filled' severity='info'>{warning}</Alert> : null}

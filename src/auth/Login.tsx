@@ -4,8 +4,9 @@ import { Box, Typography } from '@mui/material';
 
 const Login: React.FC = () => {
     var client_id:string=process.env.REACT_APP_CLIENT_ID!
-    var callback_url='http://localhost:3000/'
-    
+    var client_secret:string=process.env.REACT_APP_CLIENT_SECRET!
+    var callback_url:string=process.env.REACT_APP_CALLBACK_URL!
+
     // building the auth url
     let auth_url = new URL('https://accounts.spotify.com/authorize')
     auth_url.searchParams.set('client_id', client_id)
@@ -18,7 +19,8 @@ const Login: React.FC = () => {
         sx={{
             display:'flex',
             flexDirection:'column',
-            padding:5
+            padding:5,
+            textAlign:'center'
         }}
     >
         <Typography variant='subtitle2'><i>Just login and start experimenting mate!!</i></Typography>

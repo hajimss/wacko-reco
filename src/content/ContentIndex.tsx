@@ -8,7 +8,12 @@ const ContentIndex: FC = () => {
 
   return (
     <Box
-      sx={{display:'flex', flexDirection:'column', width:'80%', alignItems:'center'}}
+      sx={{
+        display:'flex', 
+        flexDirection:'column', 
+        width:'100%', 
+        alignItems:'center'
+      }}
     >
       <RecoIndex/>
       <TopsIndex/>

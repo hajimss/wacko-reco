@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Box, Paper, Typography, List, ListItem, ListItemText } from '@mui/material'
+import { Box, Typography, List } from '@mui/material'
+import SongBox from './SongBox';
 
 interface Item {
     id: string;
@@ -22,7 +23,7 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
         setData(response.data.items)
         }
         getData()
-    }, [])
+    }, [category, token])
 
     if (data.length !== 0) {
         var dataString = JSON.stringify(data)
@@ -35,13 +36,8 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
         } else {
             return data.map((item: Item | null) => {
                 return(
-                <List component="nav" key={item!.id} aria-label="mailbox folders">
-                    <ListItem>
-                        <div>
-                            <Typography variant='body2' fontWeight='light'>{item!.name}</Typography>
-                            <Typography fontSize={10} fontWeight='light'><i>{item!.id}</i></Typography>
-                        </div>
-                    </ListItem>
+                <List sx={{padding:2}} component="nav" key={item!.id} aria-label="mailbox folders">
+                    <SongBox mainTitle={item!.name} subTitle={item!.id}/>
                 </List>
                 )
 
@@ -51,16 +47,17 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
     }
 
     return (
-        <Paper
+        <Box
             sx={{
-                width:'50%',
-                margin: 1
+                width:'40%',
+                borderRadius: '5px',
+                margin: 1,
+                bgcolor:'white'
             }}
-            elevation={5}
         >
             <Typography sx={{padding:2, textAlign:'center'}} fontWeight='medium'>Your Top {category[0].toUpperCase() + category.slice(1)}</Typography>
             {renderList()}
-        </Paper>
+        </Box>
     )
 }
 

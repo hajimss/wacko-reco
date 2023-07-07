@@ -1,20 +1,20 @@
 import React, { FC } from 'react'
 import { OutputTrack } from './interfaces/general.interfaces'
-import { Box, Paper, List, ListItem, Typography, Button } from '@mui/material'
-import SongCard from './SongCard'
+import { Box, Typography, Button } from '@mui/material'
+import SongBox from '../../template/SongBox'
+
 
 interface Props {
     data: OutputTrack[]
 }
 
 const RecoPlaylist: FC<Props> = ({data}) => {
-    
   return (
-    <Box sx={{width:'100%', margin:2}}>
+    <Box sx={{width:'90%', borderRadius:'5px', margin:2, padding:2}} bgcolor={'white'}>
         <Typography variant='h5'>Recommended Playlist</Typography>
         <Box sx={{display:'grid', margin:1}}>
         {data.map((track: OutputTrack) => {
-            return <SongCard key={track.id} name={track.name} artists={track.artists}/>
+            return <SongBox key={track.id} mainTitle={track.name} subTitle={track.artists.map((value)=> value.name)}/>
         })}
         </Box>
         <Box
