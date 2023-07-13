@@ -18,7 +18,8 @@ const App: React.FC = () => {
 
     if (url.includes('#')){
       const endIndex = url.indexOf('&token_type')
-      const access_token = url.slice(36, endIndex)
+      const startIndex = url.indexOf('#access_token=')
+      const access_token = url.slice(startIndex+14, endIndex)
       localStorage.setItem('access_token', access_token)
       setToken(access_token)
     }
