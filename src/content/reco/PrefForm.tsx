@@ -1,10 +1,16 @@
 import { Button, Box, Checkbox, FormControl, FormControlLabel, Typography, Alert } from '@mui/material'
-import React, { FC, FormEventHandler, useState } from 'react'
+import React, { FC, FormEventHandler, useEffect, useState } from 'react'
 import MetricSlider from './MetricSlider';
 import { TrackObj, ArtistObj, MetricObj, HandleSubmitInterface } from './interfaces/form.interfaces';
+import axios from 'axios';
 
 interface Props {
     handleSubmit: HandleSubmitInterface;
+}
+
+interface DataObj {
+    tracklist?: any;
+    artistlist?: any;
 }
 
 const PrefForm: FC<Props> = ({handleSubmit}) => {
@@ -12,12 +18,27 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
     const [trackSeed, setTrackSeed] = useState<Set<string>>(new Set())
     const [artistSeed, setArtistSeed] = useState<Set<string>>(new Set())
     const [warning, setWarning] = useState('')
+
+
+    const token = localStorage.getItem('access_token')
+    const [data, setData] = useState<DataObj>({})
     
     // if too many metrics, we can make the initial state to another variable and make things DYNAMIC
     const [metricValue, setMetricValue] = useState<MetricObj>({danceability:[25,75], acousticness:[25,75], instrumentalness:[25,75]})
-    
-    const tracklist = JSON.parse(localStorage.getItem('tracks') || '[]')
-    const artistlist = JSON.parse(localStorage.getItem('artists') || '[]')    
+
+    useEffect(() => {
+
+        const getData = async () => {
+            const artistResponse = await axios.get(`https://api.spotify.com/v1/me/top/artists?limit=10`, {headers: {Authorization: `Bearer ${token}`}})
+            const trackResponse = await axios.get(`https://api.spotify.com/v1/me/top/tracks?limit=10`, {headers: {Authorization: `Bearer ${token}`}})
+            
+            setData({tracklist: trackResponse.data.items, artistlist: artistResponse.data.items})
+            
+        }
+
+        getData()
+
+    }, [token])
 
     const handleCheckboxChange = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -67,7 +88,7 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
     }
 
     const renderTrack = () => {
-        return tracklist!.map((track: TrackObj) => {
+        return data.tracklist!.map((track: TrackObj) => {
             return(
                 <FormControlLabel 
                     key={track.id}
@@ -79,7 +100,7 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
     }
 
     const renderArtist = () => {
-        return artistlist!.map((artist: ArtistObj) => {
+        return data.artistlist!.map((artist: ArtistObj) => {
             return (
                 <FormControlLabel 
                     key={artist.id}
@@ -104,13 +125,13 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
                 <Box sx={{width:'50%', padding:1}}>
                     <Typography variant='h5'> Top Tracks Seed</Typography>
                     <FormControl>
-                        {renderTrack()}
+                        {Object.keys(data).includes('tracklist') ? renderTrack() : null}
                     </FormControl>
                 </Box>
                 <Box sx={{width:'50%', padding:1}}>
                     <Typography variant='h5'> Top Artists Seed</Typography>
                     <FormControl>
-                        {renderArtist()}
+                        {Object.keys(data).includes('artistlist') ? renderArtist() : null}
                     </FormControl>
                 </Box>
             </Box>

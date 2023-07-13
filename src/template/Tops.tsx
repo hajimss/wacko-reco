@@ -24,12 +24,7 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
         }
         getData()
     }, [category, token])
-
-    if (data.length !== 0) {
-        var dataString = JSON.stringify(data)
-        localStorage.setItem(category, dataString)
-    }
-
+    
     const renderList = () => {
         if (data.length === 0) {
             return null
