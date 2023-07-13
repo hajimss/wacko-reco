@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import axios from 'axios'
 import { Box, Typography, List } from '@mui/material'
 import SongBox from './SongBox';
+import Title from './Title';
 
 interface Item {
     id: string;
@@ -30,11 +31,7 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
             return null
         } else {
             return data.map((item: Item | null) => {
-                return(
-                <List sx={{padding:2}} component="nav" key={item!.id} aria-label="mailbox folders">
-                    <SongBox mainTitle={item!.name} subTitle={item!.id}/>
-                </List>
-                )
+                return <SongBox key={item!.id} mainTitle={item!.name}/>
 
             })
         }
@@ -50,7 +47,7 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
                 bgcolor:'white'
             }}
         >
-            <Typography sx={{padding:2, textAlign:'center'}} fontWeight='medium'>Your Top {category[0].toUpperCase() + category.slice(1)}</Typography>
+            <Title title={`Your Top ${category[0].toUpperCase() + category.slice(1)}`}/>
             {renderList()}
         </Box>
     )

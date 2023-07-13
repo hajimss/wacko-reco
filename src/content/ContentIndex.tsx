@@ -1,7 +1,8 @@
-import { Box } from '@mui/material'
+import { Box, Divider } from '@mui/material'
 import React, { FC } from 'react'
 import RecoIndex from './reco/RecoIndex'
 import TopsIndex from './tops/TopsIndex'
+import Title from '../template/Title'
 
 const ContentIndex: FC = () => {
 
@@ -16,6 +17,7 @@ const ContentIndex: FC = () => {
       }}
     >
       <RecoIndex/>
+      <Divider><Title title='Personalised Charts' /></Divider>
       <TopsIndex/>
     </Box>
   )

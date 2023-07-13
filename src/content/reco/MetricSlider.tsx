@@ -29,9 +29,9 @@ const MetricSlider: FC<MetricProp> = ({ metric, value, handleSliderChange }) => 
 
     return (
         <Box
-            sx={{ width: '25%', padding: 3 }}
+            sx={{ width: '25%', padding: 1}}
         >
-            <Typography>{metric[0].toUpperCase() + metric.slice(1)}</Typography>
+            <Typography variant='subtitle1' fontSize={11}>{metric[0].toUpperCase() + metric.slice(1)}</Typography>
             <Slider
                 getAriaLabel={() => metric}
                 value={currVal}

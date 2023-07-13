@@ -31,7 +31,7 @@ const RecoIndex = () => {
       const query = QueryString.stringify({
         'limit': 10,
         'seed_artists': Array.from(artists).join(','),
-        'seed_genres': 'hip-hop',
+        'seed_genres': 'hip-hop, r-n-b',
         'seed_tracks': Array.from(tracks).join(','),
         'min_danceability': metrics.danceability[0] / 100,
         'max_danceability': metrics.danceability[1] / 100,
@@ -70,8 +70,9 @@ const RecoIndex = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 2,
-        width: '100%'
+        width: '100%',
+        border: '2px solid',
+        borderRadius: '5px'
       }}
     >
       {recoData.length !== 0 ? <RecoPlaylist data={recoData} /> : null}

@@ -1,8 +1,9 @@
-import { Button, Box, Checkbox, FormControl, FormControlLabel, Typography, Alert } from '@mui/material'
+import { Button, Box, Checkbox, FormControl, FormControlLabel, Typography, Alert, Paper } from '@mui/material'
 import React, { FC, FormEventHandler, useEffect, useState } from 'react'
 import MetricSlider from './MetricSlider';
 import { TrackObj, ArtistObj, MetricObj, HandleSubmitInterface } from './interfaces/form.interfaces';
 import axios from 'axios';
+import Title from '../../template/Title';
 
 interface Props {
     handleSubmit: HandleSubmitInterface;
@@ -92,8 +93,11 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
             return(
                 <FormControlLabel 
                     key={track.id}
-                    control={<Checkbox name={'track '+track.id} value={track.id} onChange={handleCheckboxChange}/>} 
-                    label={track.name}
+                    control={<Checkbox 
+                            name={'track '+track.id} 
+                            value={track.id} 
+                            onChange={handleCheckboxChange}/>} 
+                    label={<Typography variant="subtitle2">{track.name}</Typography>}
                 />
             ) 
         })
@@ -104,8 +108,11 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
             return (
                 <FormControlLabel 
                     key={artist.id}
-                    control={<Checkbox name={'artist ' + artist.id} value={artist.id} onChange={handleCheckboxChange}/>} 
-                    label={artist.name}
+                    control={<Checkbox 
+                            name={'artist ' + artist.id} 
+                            value={artist.id} 
+                            onChange={handleCheckboxChange}/>} 
+                    label={<Typography variant="subtitle2">{artist.name}</Typography>}
                 />
             )
         })
@@ -119,36 +126,39 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
             <Box sx={{
                 display:'flex',
                 flexDirection:'row',
+                flexWrap:'wrap',
                 justifyContent:'space-around',
             }}
             >
-                <Box sx={{width:'50%', padding:1}}>
-                    <Typography variant='h5'> Top Tracks Seed</Typography>
+                <Paper sx={{width:'60%', padding:1, margin:0.5}}>
+                    <Title title='Top Tracks Seed'/>
                     <FormControl>
                         {Object.keys(data).includes('tracklist') ? renderTrack() : null}
                     </FormControl>
-                </Box>
-                <Box sx={{width:'50%', padding:1}}>
-                    <Typography variant='h5'> Top Artists Seed</Typography>
+                </Paper>
+                <Paper sx={{width:'60%', padding:1, margin:0.5}}>
+                    <Title title='Top Artists Seed'/>
                     <FormControl>
                         {Object.keys(data).includes('artistlist') ? renderArtist() : null}
                     </FormControl>
-                </Box>
+                </Paper>
             </Box>
-            <Box
+            <Paper
                 sx={{
                     display:'flex',
-                    width:'100%',
+                    width:'90%',
                     flexDirection:'column',
+                    padding:0.5
                 }}
             >
                 <Box>
-                    <Typography variant='h5' >Metrics</Typography>
+                    <Title title='Metrics'/>
                 </Box>
                 <Box
                     sx={{
                         display:'flex',
-                        justifyContent:'space-around'
+                        justifyContent:'space-around',
+                        flexWrap:'wrap',
                     }}
                 >
                 <MetricSlider value={metricValue['danceability']} metric='danceability' handleSliderChange={handleSliderChange}/>
@@ -156,8 +166,8 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
                 <MetricSlider value={metricValue['instrumentalness']} metric='instrumentalness' handleSliderChange={handleSliderChange}/>
                 </Box>
                 
-            </Box>
-            <Button sx={{width:'50%'}} color='secondary' variant='contained' type='submit'>
+            </Paper>
+            <Button sx={{margin: 2, width:'50%'}} color='secondary' variant='contained' type='submit'>
                 Generate Playlist
             </Button>
         </Box>
