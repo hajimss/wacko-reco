@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from 'react'
 import axios from 'axios'
-import { Box, Typography, List } from '@mui/material'
+import { Box } from '@mui/material'
 import SongBox from './SongBox';
 import Title from './Title';
 
@@ -20,7 +20,7 @@ const Tops: FC<TopsProps> = (props: TopsProps) => {
 
     useEffect(() => {
         const getData = async () => {
-        const response = await axios.get(`https://api.spotify.com/v1/me/top/${category}?limit=10`, {headers: {Authorization: `Bearer ${token}`}})
+        const response = await axios.get(`https://api.spotify.com/v1/me/top/${category}?limit=20`, {headers: {Authorization: `Bearer ${token}`}})
         setData(response.data.items)
         }
         getData()

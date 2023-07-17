@@ -4,7 +4,7 @@ import Tops from '../../template/Tops'
 
 const TopsIndex = () => {
   return (
-    <Box sx={{display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
+    <Box sx={{marginTop: 5, display:'flex', justifyContent:'center', flexWrap:'wrap'}}>
     <Tops category='tracks'/>
     <Tops category='artists'/>
     </Box>

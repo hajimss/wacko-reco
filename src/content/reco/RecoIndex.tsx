@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import PrefForm from './PrefForm'
 import QueryString from 'qs'
@@ -17,11 +17,11 @@ interface InputData {
 const RecoIndex = () => {
   const [inputData, setInputData] = useState<InputData>({} as InputData)
   const [recoData, setRecoData] = useState([])
+  const [savedPlaylist, setSavedPlaylist] = useState(false)
 
 
   useEffect(() => {
     const getData = async () => {
-      console.log('input', inputData)
       const { tracks, artists, metrics } = inputData
 
       if (!metrics) {
@@ -29,7 +29,7 @@ const RecoIndex = () => {
       }
 
       const query = QueryString.stringify({
-        'limit': 10,
+        'limit': 15,
         'seed_artists': Array.from(artists).join(','),
         'seed_genres': 'hip-hop, r-n-b',
         'seed_tracks': Array.from(tracks).join(','),
@@ -48,6 +48,7 @@ const RecoIndex = () => {
         setRecoData(response.data.tracks.map((track: OutputTrack) => {
           return { id: track.id, name: track.name, artists: track.artists }
         }))
+        setSavedPlaylist(false)
       }
     }
 
@@ -58,8 +59,42 @@ const RecoIndex = () => {
 
   }, [inputData])
 
+
+
   const handleSubmit: HandleSubmitInterface = (trackSeed, artistSeed, metrics) => {
     setInputData({ 'tracks': trackSeed, 'artists': artistSeed, 'metrics': metrics })
+  }
+
+  const handleSaveSubmit = (name: string) => {
+    const savePlaylist = async () => {
+      const requestBody = {
+        name: name,
+        public: true
+      }
+      const user_id = localStorage.getItem('user_id')
+      const response = await axios.post(
+          `https://api.spotify.com/v1/users/${user_id}/playlists`, 
+          requestBody,
+          { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }
+      )
+      const playlistData = response.data
+      const playlist_id = playlistData.id
+
+      var addRequestBody = {
+        uris: recoData.map((track: OutputTrack) => {
+          return `spotify:track:${track.id}`})
+      }
+
+      const trackResponse = await axios.post(`
+          https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
+          addRequestBody,
+          { headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` } }
+          )
+    }
+
+    savePlaylist();
+    setSavedPlaylist(true)
+
   }
 
 
@@ -72,11 +107,23 @@ const RecoIndex = () => {
         alignItems: 'center',
         width: '100%',
         border: '2px solid',
-        borderRadius: '5px'
+        borderRadius: '5px',
+        margin:5
       }}
     >
-      {recoData.length !== 0 ? <RecoPlaylist data={recoData} /> : null}
+      
       <PrefForm handleSubmit={handleSubmit} />
+
+      {
+        savedPlaylist ? 
+        <Typography>Playlist Saved!</Typography>
+        :
+        recoData.length !== 0 ? 
+        <RecoPlaylist data={recoData} handleSaveSubmit={handleSaveSubmit} /> 
+        : 
+        null
+      }
+
     </Box>
   )
 }

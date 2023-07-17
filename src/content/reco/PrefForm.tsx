@@ -79,8 +79,8 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
 
     const onHandleSubmit: FormEventHandler<Element> = (e) => {
         e.preventDefault()
-        if (trackSeed.size + artistSeed.size > 4){
-            setWarning('There can be a max of only 4 seeds.')
+        if (trackSeed.size + artistSeed.size > 3){
+            setWarning('There can be a max of only 3 seeds.')
             return
         } else {
             handleSubmit(trackSeed, artistSeed, metricValue)
@@ -130,13 +130,13 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
                 justifyContent:'space-around',
             }}
             >
-                <Paper sx={{width:'60%', padding:1, margin:0.5}}>
+                <Paper sx={{width:'60%', padding:1, margin:0.5}} elevation={5}>
                     <Title title='Top Tracks Seed'/>
                     <FormControl>
                         {Object.keys(data).includes('tracklist') ? renderTrack() : null}
                     </FormControl>
                 </Paper>
-                <Paper sx={{width:'60%', padding:1, margin:0.5}}>
+                <Paper sx={{width:'60%', padding:1, margin:0.5}} elevation={5}>
                     <Title title='Top Artists Seed'/>
                     <FormControl>
                         {Object.keys(data).includes('artistlist') ? renderArtist() : null}
@@ -150,6 +150,7 @@ const PrefForm: FC<Props> = ({handleSubmit}) => {
                     flexDirection:'column',
                     padding:0.5
                 }}
+                elevation={5}
             >
                 <Box>
                     <Title title='Metrics'/>

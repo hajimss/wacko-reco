@@ -1,11 +1,12 @@
-import { Box, Divider } from '@mui/material'
+import { Box } from '@mui/material'
 import React, { FC } from 'react'
 import RecoIndex from './reco/RecoIndex'
 import TopsIndex from './tops/TopsIndex'
-import Title from '../template/Title'
+import PersonalIndex from './personal/PersonalIndex'
+
+
 
 const ContentIndex: FC = () => {
-
 
   return (
     <Box
@@ -16,9 +17,12 @@ const ContentIndex: FC = () => {
         alignItems:'center'
       }}
     >
+    <PersonalIndex/>
+    
       <RecoIndex/>
-      <Divider><Title title='Personalised Charts' /></Divider>
+      
       <TopsIndex/>
+
     </Box>
   )
 }

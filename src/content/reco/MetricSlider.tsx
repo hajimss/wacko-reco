@@ -22,7 +22,6 @@ const MetricSlider: FC<MetricProp> = ({ metric, value, handleSliderChange }) => 
         event: Event,
         newValue: number | number[]
     ) => {
-        console.log()
         handleSliderChange(metric, newValue as number[])
         setCurrVal(newValue as number[])
     }

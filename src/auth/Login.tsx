@@ -11,7 +11,7 @@ const Login: React.FC = () => {
     auth_url.searchParams.set('client_id', client_id)
     auth_url.searchParams.set('redirect_uri', callback_url)
     auth_url.searchParams.set('response_type', 'token')
-    auth_url.searchParams.set('scope', 'user-top-read')
+    auth_url.searchParams.set('scope', 'user-top-read playlist-modify-public')
 
   return (
     <Box
